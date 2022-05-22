@@ -1,0 +1,12 @@
+.join{
+    background-color: rgb(245, 238, 238);
+    height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: contain;
+}
+.joinContainer > form{
+    display: flex;
+    flex-direction: column;
+}

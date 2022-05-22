@@ -21,8 +21,8 @@ function Chat() {
  setRoom(room);
  console.log(name,room);
 
-socket.emit('join',{name,room},(message)=>{
-  console.log(message);
+socket.emit('join',{name,room},()=>{
+ 
 
 });
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import './InfoBar.css'
 import closeIcon from '../../Icons/';
-import onllineIcon from '../../Icons/';
+import onlineIcon from '../../Icons/';
 
 function InfoBar({room}) {
   return (

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import queryString from "query-string";
 import { io } from "socket.io-client";
 import "./Chat.css";
-import InfoBar from '../InfoBar/InfoBar';
-import Input from '../Input/Input';
+import InfoBar from "../InfoBar/InfoBar";
+import Input from "../Input/Input";
 let socket;
 
 function Chat() {
@@ -34,28 +34,31 @@ function Chat() {
     socket.on("message", (message) => {
       setmessages([...messages, message]);
     });
-    console.log(message,messages);
-  }, [messages,message]);
+    console.log(message, messages);
+  }, [messages, message]);
 
+  const sendMessage = (event) => {
+    event.preventDefault();
+    if (message) {
+      socket.emit("sendMessage", message, () => setmessage(""));
+    }
+    console.log(message, messages);
+  };
 
-const sendMessage=(event)=>{
-  event.preventDefault();
-  if(message){
-    socket.emit('sendMessage',message,()=>setmessage(""))
-  }
-  console.log(message,messages);
-
-}
-
-
-  return <div className="chat">
-    <div className="outerContainer">
-      <div className="container">
-        <InfoBar room={room}/>
-<Input message={message} setmessage={setmessage} sendMessage={sendMessage()}/>
+  return (
+    <div className="chat">
+      <div className="outerContainer">
+        <div className="container">
+          <InfoBar room={room} />
+          <Input
+            message={message}
+            setmessage={setmessage}
+            sendMessage={sendMessage()}
+          />
+        </div>
       </div>
     </div>
-  </div>;
+  );
 }
 
 export default Chat;

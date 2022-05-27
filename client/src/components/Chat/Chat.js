@@ -37,8 +37,8 @@ function Chat() {
     console.log(message, messages);
   }, [messages, message]);
 
-  const sendMessage = (event) => {
-    event.preventDefault();
+  const sendMessage = (e) => {
+    e.preventDefault();
     if (message) {
       socket.emit("sendMessage", message, () => setmessage(""));
     }
@@ -53,7 +53,7 @@ function Chat() {
           <Input
             message={message}
             setmessage={setmessage}
-            sendMessage={sendMessage()}
+            sendMessage={sendMessage}
           />
         </div>
       </div>

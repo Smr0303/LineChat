@@ -19,6 +19,7 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
 
 app.use(express.json());
 app.use(cors({ origin: true }));
+
 app.use(router);
 
 io.on("connect", (socket) => {
@@ -28,7 +29,6 @@ io.on("connect", (socket) => {
     if (error) {
       return callback(error);
     }
-
     socket.emit("message", {
       user: "admin",
       text: `${user.name},welcome to the room ${user.room}`,

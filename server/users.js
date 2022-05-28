@@ -3,7 +3,7 @@ let users = [];
 const addUser = ({ id, name, room }) => {
   name = name.trim().toLowerCase();
   room = room.trim().toLowerCase();
-  console.log(name);
+  console.log('addwed',name);
 
   const existing = users.find(
     (user) => user.room === room && user.name === name
@@ -29,7 +29,7 @@ const getUser = (id) => {
   if (users.length != 0) {
     return users.find((user) => user.id === id);
   } else {
-    alert("No user in the room");
+    console.warn("No user in the room");
   }
 };
 

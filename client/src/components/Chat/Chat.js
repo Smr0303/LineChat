@@ -17,13 +17,15 @@ function Chat() {
     const { name, room } = queryString.parse(location.search);
 
     socket = io(END_POINT);
-    console.log(socket);
+    // console.log(socket);
 
     setName(name);
     setRoom(room);
     console.log(name, room);
 
-    socket.emit("join", { name, room }, () => {});
+    socket.emit("join", { name, room }, () => {
+  
+    });
 
     return () => {
       socket.emit("disconnect");
@@ -33,17 +35,22 @@ function Chat() {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      setmessages([...messages, message]);
+      console.log('yadav',message);
+      setmessages([...messages, message]
+    );
     });
     console.log(message, messages);
-  }, [messages, message]);
+  }, []);
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    if (message) {
-      socket.emit("sendMessage", message, () => setmessage(""));
-    }
-  };
+ 
+  const sendMessage = (event) => {
+    event.preventDefault();
+
+    if(message) {
+      socket.emit('sendMessage', message);
+      setmessage(" ");
+      console.log(messages);    }
+  }
 
   return (
     <div className="chat">

@@ -35,23 +35,25 @@ io.on("connect", (socket) => {
     });
 
     socket.broadcast
-      .to(user.room)
-      .emit("message", { user: "admin", text: `${user.name} has joined!` });
-    console.log('Joining it',user.room);
-    socket.join(user.room);
-    callback(); 
+        .to(user.room)
+        .emit("message", { user: "admin", text: `${user.name} has joined!` });
+      console.log("Joining it", user.room);
+      callback();
   });
 
-  socket.on("sendMessage", (message, callback) => {
+  socket.on("sendMessage", (message) => {
+    console.log("send", message)
     const user = getUser(socket.id);
-    console.log(user );
+    console.log(user, "message");
     io.to(user.room).emit("message", { user: user.name, text: message });
-
-    callback();
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected");
+    const user =removeUser(socket.id);
+
+    if (user){
+      io.to(user.room).emit('message',{user:'Admin',text:`${user.name} has left.`});
+    }
   });
 });
 

@@ -32,13 +32,15 @@ function Chat({ location }) {
   }, [END_POINT, location.search]);
 
   useEffect(() => {
-    let messagesLocal = [...messages];
+    let messagesLocal = [];
     socket.on("message", (message) => {
-      console.log("yadav", message);
-      setmessages([...messagesLocal, message]);
+      messagesLocal=[...messagesLocal,message];
+      setmessages([...messagesLocal]);
     });
   }, []);
-
+useEffect(() => {
+  console.log(messages);
+},[messages]);
   const sendMessage = (event) => {
     event.preventDefault();
 

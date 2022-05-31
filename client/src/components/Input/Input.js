@@ -9,7 +9,6 @@ function Input({message,setmessage,sendMessage}) {
           className="input"
           type="text"
           placeholder="Type a Message"
-          value={message}
           onChange={(e) => setmessage(e.target.value)}
           onKeyPress={(e) => (e.key === "Enter" ? sendMessage(e) : null)}
         />

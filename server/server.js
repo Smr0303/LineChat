@@ -25,7 +25,7 @@ app.use(router);
 io.on("connect", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
-
+    socket.join(room);
     if (error) {
       return callback(error);
     }
@@ -35,24 +35,27 @@ io.on("connect", (socket) => {
     });
 
     socket.broadcast
-        .to(user.room)
-        .emit("message", { user: "admin", text: `${user.name} has joined!` });
-      console.log("Joining it", user.room);
-      callback();
+      .to(user.room)
+      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+    console.log("Joining it", user.room);
+    callback();
   });
 
   socket.on("sendMessage", (message) => {
-    console.log("send", message)
+    console.log("send", message);
     const user = getUser(socket.id);
     console.log(user, "message");
     io.to(user.room).emit("message", { user: user.name, text: message });
   });
 
   socket.on("disconnect", () => {
-    const user =removeUser(socket.id);
+    const user = removeUser(socket.id);
 
-    if (user){
-      io.to(user.room).emit('message',{user:'Admin',text:`${user.name} has left.`});
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "Admin",
+        text: `${user.name} has left.`,
+      });
     }
   });
 });
